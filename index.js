@@ -1,24 +1,15 @@
-function isValidSudoku(board) {
-  const rows = Array(9)
-    .fill()
-    .map(() => new Set());
-  const cols = Array(9)
-    .fill()
-    .map(() => new Set());
-  const boxes = Array(9)
-    .fill()
-    .map(() => new Set());
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      const num = board[i][j];
-      if (num === ".") continue;
-      const boxIndex = Math.floor(i / 3) * 3 + Math.floor(j / 3);
-      if (rows[i].has(num) || cols[j].has(num) || boxes[boxIndex].has(num))
-        return false;
-      rows[i].add(num);
-      cols[j].add(num);
-      boxes[boxIndex].add(num);
+function uniquePaths(m, n) {
+  const dp = Array.from(Array(m), () => Array(n).fill(0));
+  for (let i = 0; i < m; i++) {
+    dp[i][0] = 1;
+  }
+  for (let j = 0; j < n; j++) {
+    dp[0][j] = 1;
+  }
+  for (let i = 1; i < m; i++) {
+    for (let j = 1; j < n; j++) {
+      dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
     }
   }
-  return true;
+  return dp[m - 1][n - 1];
 }
